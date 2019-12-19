@@ -1,0 +1,11 @@
+.herowWrap {
+    display: flex;
+}
+
+.hero {
+    padding: 20px;
+}
+
+.hero__powers {
+    padding-left: 17px;
+}
