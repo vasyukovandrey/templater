@@ -3,34 +3,20 @@
 class LoadResource {
     constructor(fileUrl) {
         this.fileUrl = fileUrl;
-        this.result = false;
     }
-
-    xhrSuccess(xhr) {
-        this.result = xhr.response;
-        return this.result;
-    }
-    
-    xhrError() {
-        console.error(`error: ${this.status}; request status: ${this.statusText}`); 
-    }
-
     responseData() {
         const xhr = new XMLHttpRequest();
-        xhr.responseType = 'json';
-        xhr.onload = this.xhrSuccess.bind(this,xhr);
-        xhr.onerror = this.xhrError.bind(xhr);
-        xhr.open("GET", this.fileUrl, true);
+        xhr.open("GET", this.fileUrl, false);
         xhr.send();
-    }
-
-    getData(){
-        return this.result;
+        if (xhr.status !== 200) {
+            console.error(`error: ${xhr.status}; request status: ${xhr.statusText}`);
+        } else {
+            return JSON.parse(xhr.response);
+        }
     }
 }
 
 const fileUrl = "https://raw.githubusercontent.com/mdn/learning-area/master/javascript/oojs/json/superheroes.json";
 const xhr = new LoadResource(fileUrl);
-xhr.responseData();
-const data = xhr.getData();
+const data = xhr.responseData();
 console.log(data);
