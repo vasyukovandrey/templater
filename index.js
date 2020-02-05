@@ -21,14 +21,20 @@ const xhr = new LoadResource(fileUrl);
 const data = xhr.responseData();
 console.log(data);
 
-const squadName = `<h1> ${data.squadName} </h1>`;
-document.getElementById('root').innerHTML += squadName;
+const root = document.getElementById('root');
 
-const homeTown = `<div> ${data.homeTown} </div>`;
-document.getElementById('root').innerHTML += homeTown;
+const squadName  = document.createElement("h1");
+squadName.innerHTML = data.squadName;
+root.append(squadName);
 
-const formed = `<div> ${data.formed} </div>`;
-document.getElementById('root').innerHTML += formed;
+const homeTown  = document.createElement("div");
+homeTown.innerHTML = data.homeTown;
+root.append(homeTown);
 
-const secretBase = `<i> ${data.secretBase} </i>`;
-document.getElementById('root').innerHTML += secretBase;
+const formed  = document.createElement("div");
+formed.innerHTML = data.formed;
+root.append(formed);
+
+const secretBase  = document.createElement("i");
+secretBase.innerHTML = data.secretBase;
+root.append(secretBase);
