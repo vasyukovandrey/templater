@@ -22,19 +22,22 @@ const data = xhr.responseData();
 console.log(data);
 
 const root = document.getElementById('root');
+const fragment = document.createDocumentFragment();
 
 const squadName  = document.createElement("h1");
-squadName.innerHTML = data.squadName;
-root.append(squadName);
+squadName.innerText = data.squadName;
+fragment.appendChild(squadName);
 
 const homeTown  = document.createElement("div");
-homeTown.innerHTML = data.homeTown;
-root.append(homeTown);
+homeTown.innerText = data.homeTown;
+fragment.appendChild(homeTown);
 
 const formed  = document.createElement("div");
-formed.innerHTML = data.formed;
-root.append(formed);
+formed.innerText = data.formed;
+fragment.appendChild(formed);
 
 const secretBase  = document.createElement("i");
-secretBase.innerHTML = data.secretBase;
-root.append(secretBase);
+secretBase.innerText = data.secretBase;
+fragment.appendChild(secretBase);
+
+root.append(fragment);
