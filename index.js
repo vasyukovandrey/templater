@@ -16,21 +16,26 @@ class LoadResource {
     }
 }
 
-function buildDom (items,rules) {
+function buildDom (squadProperties, elementsTags) {
     const fragment = document.createDocumentFragment();
-    let tag = '';
+    
 
-    for (let item in items) {
-        if (item !== 'members' && item !== 'active') {
-            if  (rules[item]) {
-                tag = rules[item];
-            } else {
-                tag = 'div';
-            }
-            const node = document.createElement(tag);
-            node.innerText = items[item];
-            fragment.appendChild(node);
+    for (let property in squadProperties) {
+
+        if (property === 'members' || property === 'active') {
+            continue;
         }
+
+        let tag = 'div';
+
+        if  (elementsTags[property]) {
+            tag = elementsTags[property];
+        }
+
+        const node = document.createElement(tag);
+        node.innerText = squadProperties[property];
+        fragment.appendChild(node);
+        
     }
 
     return fragment;
@@ -41,10 +46,10 @@ const xhr = new LoadResource(fileUrl);
 const data = xhr.responseData();
 const root = document.getElementById('root');
 
-const tagRules = {
+const elementselementsTags = {
     "squadName": "h1",
     "secretBase": "i"
 };
 
-const segment = buildDom(data,tagRules);
+const segment = buildDom(data, elementselementsTags);
 root.append(segment);
