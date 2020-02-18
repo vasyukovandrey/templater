@@ -16,40 +16,48 @@ class LoadResource {
     }
 }
 
-function buildDom (squadProperties, elementsTags) {
-    const fragment = document.createDocumentFragment();
+function mapData(data) {
+    const result = [];
+
+    for (let key in data) {
+        const item = {
+            name: key,
+            value: data[key],
+            tag: elementsTags[key] || elementsTags.default
+        }
     
-
-    for (let property in squadProperties) {
-
-        if (property === 'members' || property === 'active') {
-            continue;
-        }
-
-        let tag = 'div';
-
-        if  (elementsTags[property]) {
-            tag = elementsTags[property];
-        }
-
-        const node = document.createElement(tag);
-        node.innerText = squadProperties[property];
-        fragment.appendChild(node);
-        
+        result.push(item);
     }
 
+    return result;
+}
+
+function buildDom(squadProperties) {
+    const fragment = document.createDocumentFragment();
+
+    squadProperties.forEach(function(item){
+        const node = document.createElement(item.tag);
+        node.innerText = item.value;
+        fragment.appendChild(node);
+    });
+    
     return fragment;
 }
 
-const fileUrl = "https://raw.githubusercontent.com/mdn/learning-area/master/javascript/oojs/json/superheroes.json";
-const xhr = new LoadResource(fileUrl);
-const data = xhr.responseData();
-const root = document.getElementById('root');
-
-const elementselementsTags = {
-    "squadName": "h1",
-    "secretBase": "i"
+const elementsTags = {
+    default: 'div',
+    squadName: 'h1',
+    secretBase: 'i'
 };
 
-const segment = buildDom(data, elementselementsTags);
+const fileUrl = "https://raw.githubusercontent.com/mdn/learning-area/master/javascript/oojs/json/superheroes.json";
+const xhr = new LoadResource(fileUrl);
+const responseData = xhr.responseData();
+const root = document.getElementById('root');
+
+delete responseData.active;
+delete responseData.members;
+
+const data = mapData(responseData);
+const segment = buildDom(data);
 root.append(segment);
