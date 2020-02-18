@@ -1,5 +1,4 @@
 "use strict";
-
 class LoadResource {
     constructor(fileUrl) {
         this.fileUrl = fileUrl;
